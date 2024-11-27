@@ -1,9 +1,8 @@
-import React from 'react'
+"use client";
+import React from "react";
 
-const Home = () => {
-  return (
-    <div>HOME MANGO CHALLENGE</div>
-  )
-}
+const Home: React.FC = () => {
+  return <h1 className="text-2xl">Mango frontend challenge</h1>;
+};
 
-export default Home
+export default Home;

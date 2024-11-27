@@ -1,0 +1,24 @@
+{
+  "header": {
+    "homeUrl": "/",
+    "logo": "Super hero squad",
+    "company": "Mango",
+    "closeMenu": "Close Menu",
+    "openMenu": "Open main Menu",
+    "menuItems": [
+      {
+        "title": "Exercise 1",
+        "url": "exercise-one",
+        "key": "menu_item_id_001"
+      },
+      {
+        "title": "Exercise 2",
+        "url": "exercise-two",
+        "key": "menu_item_id_002"
+      }
+    ]
+  },
+  "footer": {
+    "text": "Mango challenge by Juan M. Panzitta - 2024"
+  }
+}
