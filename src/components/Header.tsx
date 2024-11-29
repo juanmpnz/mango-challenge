@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 // Commponents
 import { Dialog, DialogPanel, PopoverGroup } from "@headlessui/react";
@@ -7,7 +7,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 // Texts
 import componentTexts from "./texts.json";
 
-export default function Example() {
+const Header: React.FC = () => {
   const router = useRouter();
   const { header } = componentTexts;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -103,4 +103,6 @@ export default function Example() {
       </Dialog>
     </header>
   );
-}
+};
+
+export default Header;

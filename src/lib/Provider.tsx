@@ -1,5 +1,7 @@
 "use client";
+// Hooks
 import { useState } from "react";
+// Providers
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
 const Provider = ({ children }) => {

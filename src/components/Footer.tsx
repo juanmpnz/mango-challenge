@@ -1,7 +1,8 @@
 import React from "react";
+// Texts
 import componentTexts from "./texts.json";
 
-const Footer = () => {
+const Footer: React.FC = () => {
   const { footer } = componentTexts;
   return (
     <footer>
