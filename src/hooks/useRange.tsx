@@ -1,19 +1,7 @@
 // Hooks
 import { useState, useEffect, useRef } from "react";
 import useOnClickOutside from "./useClickOutside";
-
-type DraggingType = "min" | "max" | null;
-
-type InputRange = { min: number; max: number } | [number, number][];
-
-type RangeValues = {
-  min: number;
-  max: number;
-};
-interface UseDragRangeProps {
-  range: InputRange;
-  fixedValuesRange?: boolean;
-}
+import { DraggingType, RangeValues, UseDragRangeProps } from "./types";
 
 export const useRange = ({ range, fixedValuesRange }: UseDragRangeProps) => {
   const [rangeValues, setRangeValues] = useState<RangeValues>({
@@ -27,11 +15,10 @@ export const useRange = ({ range, fixedValuesRange }: UseDragRangeProps) => {
   const [isDragging, setIsDragging] = useState<DraggingType>(null);
   const [rangeElement, setRangeElement] = useState<HTMLElement | null>(null);
   // Valores del rango modificados o no por el usuario
-  const [minValue, setMinValue] = useState<number>(); // Inicialización correcta como número
+  const [minValue, setMinValue] = useState<number>(); 
   const [maxValue, setMaxValue] = useState<number>();
   // Array con los parametros fijos del ej. 2
   const [fixedRanges, setFixedRanges] = useState([]);
-
   // REFS
   const rangeRef = useRef<HTMLDivElement>(null);
   const inputValuesRef = useRef<HTMLInputElement>(null);
@@ -94,16 +81,27 @@ export const useRange = ({ range, fixedValuesRange }: UseDragRangeProps) => {
     setRangeElement(rangeRef);
   };
 
-  // aca valido FIJOS O NORMALES
+  const findClosest = (array: number[], value: number): number => {
+    return array.reduce((closest, current) =>
+      Math.abs(current - value) < Math.abs(closest - value) ? current : closest
+    );
+  };
+
   const handleInputChange = (type: "min" | "max", value: number) => {
     if (fixedValuesRange) {
-      // TODO EXERCISE 2
-      console.log(value, "FIJOS");
-      console.log(fixedRanges, "fixed ranges");
-    } else {
       if (type === "min" && value >= rangeValues.min) {
-        setMinValue(Math.min(value, rangeValues.max));
+        setMinValue(findClosest(fixedRanges, value));
       } else if (type === "max" && value <= rangeValues.max) {
+        setMaxValue(findClosest(fixedRanges, value));
+      }
+    } else {
+      if (type === "min" && value >= rangeValues.min && value < maxValue) {
+        setMinValue(Math.min(value, rangeValues.max));
+      } else if (
+        type === "max" &&
+        value <= rangeValues.max &&
+        value > minValue
+      ) {
         setMaxValue(Math.max(value, rangeValues.min));
       }
     }
