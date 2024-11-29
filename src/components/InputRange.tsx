@@ -28,7 +28,7 @@ const InputRange = ({
 
   return (
     <div className="flex gap-4">
-      {editingMinValue ? (
+      {editingMinValue && !fixedValuesRange ? (
         <input
           className="block w-10 rounded-md border-0  text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  focus:ring-indigo-600  "
           type="number"
@@ -40,13 +40,15 @@ const InputRange = ({
         <Tooltip
           content="Doble click para agregar un rango manual"
           id="tooltip-tags"
+          hidden={fixedValuesRange}
         >
           <span
             onClick={() => handleUserEditValues("min")}
-            className="pointer"
             data-tooltip-target="tooltip-tags"
           >
-            <p className="min-w-10 cursor-pointer">{minValue} €</p>
+            <p className={`min-w-10 ${!fixedValuesRange && "cursor-pointer"}`}>
+              {minValue} €
+            </p>
           </span>
         </Tooltip>
       )}
@@ -75,7 +77,7 @@ const InputRange = ({
           }
         />
       </div>
-      {editingMaxValue ? (
+      {editingMaxValue && !fixedValuesRange ? (
         <input
           className="block w-10 rounded-md border-0  text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  focus:ring-indigo-600  "
           type="number"
@@ -85,15 +87,17 @@ const InputRange = ({
         />
       ) : (
         <Tooltip
+          hidden={fixedValuesRange}
           content="Doble click para agregar un rango manual"
           id="tooltip-tags"
         >
           <span
             onClick={() => handleUserEditValues("max")}
-            className="pointer"
             data-tooltip-target="tooltip-tags"
           >
-            <p className="min-w-10 cursor-pointer">{maxValue} €</p>
+            <p className={`min-w-10 ${!fixedValuesRange && "cursor-pointer"}`}>
+              {maxValue} €
+            </p>
           </span>
         </Tooltip>
       )}
