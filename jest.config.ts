@@ -5,13 +5,14 @@ const createJestConfig = nextJest({
 });
 
 const customJestConfig = {
-  testEnvironment: "jsdom",
+  maxWorkers: 1,
+  testEnvironment: 'node', 
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
   },
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   transform: {
-    "^.+\\.tsx?$": "ts-jest",
+    '^.+\\.(ts|tsx)$': 'ts-jest',  
   },
   transformIgnorePatterns: [
     "<rootDir>/node_modules/(?!(module-name|another-module-name)/)",
