@@ -15,7 +15,7 @@ export const useRange = ({ range, fixedValuesRange }: UseDragRangeProps) => {
   const [isDragging, setIsDragging] = useState<DraggingType>(null);
   const [rangeElement, setRangeElement] = useState<HTMLElement | null>(null);
   // Valores del rango modificados o no por el usuario
-  const [minValue, setMinValue] = useState<number>(); 
+  const [minValue, setMinValue] = useState<number>();
   const [maxValue, setMaxValue] = useState<number>();
   // Array con los parametros fijos del ej. 2
   const [fixedRanges, setFixedRanges] = useState([]);
@@ -28,7 +28,7 @@ export const useRange = ({ range, fixedValuesRange }: UseDragRangeProps) => {
   }, []);
 
   const formatFixedValues = (range) => {
-    if (Array.isArray(range)) {
+    if (fixedValuesRange) {
       const frequency = range.reduce((acc, num) => {
         acc[num] = (acc[num] || 0) + 1;
         return acc;
@@ -136,7 +136,7 @@ export const useRange = ({ range, fixedValuesRange }: UseDragRangeProps) => {
       window.removeEventListener("mouseup", handleMouseUp);
     };
   }, [isDragging, handleMouseMove, handleMouseUp]);
-
+ 
   return {
     handleMouseMove,
     startDragging,

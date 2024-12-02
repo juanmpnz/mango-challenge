@@ -7,7 +7,7 @@ const InputRange = ({
   fixedValuesRange = false,
   range = { min: 0, max: 100 },
 }: {
-  range: { min: number; max: number } | [number, number][];
+  range;
   fixedValuesRange?: boolean;
 }) => {
   const {
@@ -25,11 +25,11 @@ const InputRange = ({
     range,
     fixedValuesRange,
   });
-
-  return (
+   return (
     <div className="flex gap-4">
       {editingMinValue && !fixedValuesRange ? (
         <input
+          data-testid="min-input"
           className="block w-10 rounded-md border-0  text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  focus:ring-indigo-600  "
           type="number"
           ref={inputValuesRef}
@@ -63,6 +63,8 @@ const InputRange = ({
           />
         </div>
         <div
+          data-testid="min-handle"
+          role="button"
           className="absolute w-3 h-3 bg-black rounded-full transform -translate-x-1/2 cursor-pointer hover:scale-125"
           style={{ left: `${(minValue / rangeValues.max) * 100}%` }}
           onMouseDown={() =>
@@ -70,6 +72,8 @@ const InputRange = ({
           }
         />
         <div
+          data-testid="max-handle"
+          role="button"
           className="absolute w-3 h-3 bg-black rounded-full transform -translate-x-1/2 cursor-pointer hover:scale-125"
           style={{ left: `${(maxValue / rangeValues.max) * 100}%` }}
           onMouseDown={() =>
@@ -79,6 +83,7 @@ const InputRange = ({
       </div>
       {editingMaxValue && !fixedValuesRange ? (
         <input
+        data-testid="max-input"
           className="block w-10 rounded-md border-0  text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  focus:ring-indigo-600  "
           type="number"
           ref={inputValuesRef}

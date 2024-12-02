@@ -1,40 +1,38 @@
-import { render, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import InputRange from "../src/components/InputRange";
 
-describe("InputRange Component", () => {
-  it("should not allow minValue to go below initMin or maxValue to exceed initMax", () => {
-    const range = {min: 10, max : 50};
- 
-    // Renderiza el componente
-    const { getByText, container } = render(
-      <InputRange range={range}  />
-    );
+test("El componente NO PUEDE ser un rango de entrada HTML5; tiene que ser personalizado.", () => {
+  render(<InputRange range={{ min: 1, max: 99 }} />);
+  const input = screen.queryByRole("slider");
+  expect(input).toBeNull();
+});
 
-    // Obtiene referencias visuales de los valores iniciales
-    const minValueText = getByText(`${initMin} €`);
-    const maxValueText = getByText(`${initMax} €`);
+test("debería permitir al usuario arrastrar los controladores mínimo y máximo con rango como un objeto", () => {
+  render(<InputRange range={{ min: 1, max: 99 }} />);
 
-    // Simula interacciones (por simplicidad, asumimos que los controladores funcionan)
-    const rangeContainer = container.querySelector(".relative.h-1");
+  const minHandle = screen.getByTestId("min-handle");
+  const maxHandle = screen.getByTestId("max-handle");
 
-    // Simula que el usuario arrastra el controlador izquierdo a un valor menor que initMin
-    if (rangeContainer) {
-      fireEvent.mouseDown(rangeContainer, { clientX: 0 }); // Punto extremo izquierdo
-      fireEvent.mouseMove(window, { clientX: -50 }); // Fuera del rango hacia la izquierda
-      fireEvent.mouseUp(window);
-    }
+  fireEvent.mouseDown(minHandle);
+  fireEvent.mouseMove(document, { clientX: 50 });
+  fireEvent.mouseUp(document);
 
-    // Verifica que el valor mínimo no desciende por debajo de initMin
-    expect(minValueText.textContent).toBe(`${initMin} €`);
+  fireEvent.mouseDown(maxHandle);
+  fireEvent.mouseMove(document, { clientX: 150 });
+  fireEvent.mouseUp(document);
+});
 
-    // Simula que el usuario arrastra el controlador derecho a un valor mayor que initMax
-    if (rangeContainer) {
-      fireEvent.mouseDown(rangeContainer, { clientX: 100 }); // Punto extremo derecho
-      fireEvent.mouseMove(window, { clientX: 150 }); // Fuera del rango hacia la derecha
-      fireEvent.mouseUp(window);
-    }
+test("debería permitir al usuario arrastrar los controladores mínimo y máximo con el rango como una matriz", () => {
+  render(<InputRange range={[1, 99, 20, 99, 35, 99]} fixedValuesRange />);
 
-    // Verifica que el valor máximo no excede initMax
-    expect(maxValueText.textContent).toBe(`${initMax} €`);
-  });
+  const minHandle = screen.getByTestId("min-handle");
+  const maxHandle = screen.getByTestId("max-handle");
+
+  fireEvent.mouseDown(minHandle);
+  fireEvent.mouseMove(document, { clientX: 50 });
+  fireEvent.mouseUp(document);
+
+  fireEvent.mouseDown(maxHandle);
+  fireEvent.mouseMove(document, { clientX: 150 });
+  fireEvent.mouseUp(document);
 });

@@ -11,6 +11,7 @@ const exerciseTwo: React.FC = () => {
   const exerciseTwoValues = data?.exerciseTwo;
 
   if (error) return <h1>Error al obtener datos de la Api</h1>;
+ 
   return (
     <div>
     {isLoading ? (
